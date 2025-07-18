@@ -1,0 +1,351 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome library -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #2a1818;
+            color: black;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+        }
+
+        .banner {
+            position: relative;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            height: 800px; /* Adjust height as needed */
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .banner img {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .search-bar {
+            position: absolute;
+            top: 70%; /* Adjust the percentage to move the search bar down */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1; /* Ensure search bar is above the background image */
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input,
+        .search-bar button {
+            padding: 20px; /* Increase the padding to make the input and button larger */
+            font-size: 18px; /* Increase the font size for better visibility */
+            border-radius: 20px;
+        }
+
+        .search-icon {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .location-icon {
+            margin-right: 10px;
+            color: #ff0000; /* Red color */
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: flex-start; /* Align items at the start */
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-content {
+            margin-top: 10px;
+        }
+
+        .city-description {
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 100px; /* Limit height to show only a portion */
+            overflow: hidden; /* Hide overflow */
+        }
+
+        .city-description.full {
+            max-height: none; /* Show full description */
+            overflow: visible; /* Allow overflow */
+        }
+
+        .view-more {
+            color: blue;
+            cursor: pointer;
+        }
+
+        .banner-h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 60px;
+            margin: 0;
+            color: white;
+            z-index: 1; /* Ensure the text is above the background image */
+        }
+
+        .filters {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .filter-category h3 {
+            margin-bottom: 10px;
+        }
+
+        .filter-category label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .search-bar input,
+        .search-bar button {
+            margin-right: 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Big Ben, London">
+        <div class="navbar">
+            <div class="logo" style="font-family: 'Times New Roman', Times, serif;font-size: 50px;">Wander Wise</div>
+            <div>
+                <a href='/static/example2.html' style="font-size:25px;">Home</a>
+                <a href='/static/forum.html' style="font-size: 25px;">Forum</a>
+                <a href='/static/contact.html' style="font-size: 25px;">Review</a>
+            </div>
+        </div>
+        <h1 class="banner-h1">Search your next Holiday</h1>
+        <div class="search-bar">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <input type="text" id="searchInput" class="search-input" placeholder="Destination">
+            <div class="search-icon"><i class="fas fa-search"></i></div>
+        </div>
+    </div>
+
+    <div><h1 style="text-align: center; font-family: 'Times New Roman', Times, serif">Tapping the image will launch the immersive virtual reality (VR) viewing mode</h1></div>
+
+    <div class="content-wrapper">
+        <aside class="filters">
+            <h2>Filters</h2>
+            <div class="filter-category">
+                <h3>Best Time to Visit</h3>
+                <label><input type="checkbox" name="season" value="winter"> Winter (Dec - Feb)</label>
+                <label><input type="checkbox" name="season" value="spring"> Spring (Mar - May)</label>
+                <label><input type="checkbox" name="season" value="summer"> Summer (Jun - Aug)</label>
+                <label><input type="checkbox" name="season" value="autumn"> Autumn (Sep - Nov)</label>
+            </div>
+            <div class="filter-category">
+                <h3>Ratings</h3>
+                <label><input type="checkbox" name="rating" value="1"> 1 Star</label>
+                <label><input type="checkbox" name="rating" value="2"> 2 Stars</label>
+                <label><input type="checkbox" name="rating" value="3"> 3 Stars</label>
+                <label><input type="checkbox" name="rating" value="4"> 4 Stars</label>
+                <label><input type="checkbox" name="rating" value="5"> 5 Stars</label>
+            </div>
+            <div class="filter-category">
+                <h3>Location</h3>
+                <label><input type="checkbox" name="location" value="country"> Country</label>
+                <label><input type="checkbox" name="location" value="region"> Region</label>
+                <label><input type="checkbox" name="location" value="city"> City</label>
+            </div>
+            <div class="filter-category">
+                <h3>Budget</h3>
+                <label><input type="checkbox" name="budget" value="low"> Low</label>
+                <label><input type="checkbox" name="budget" value="medium"> Medium</label>
+                <label><input type="checkbox" name="budget" value="high"> High</label>
+            </div>
+            <div class="filter-category">
+                <h3>Activity</h3>
+                <label><input type="checkbox" name="activity" value="adventure"> Adventure</label>
+                <label><input type="checkbox" name="activity" value="relaxation"> Relaxation</label>
+                <label><input type="checkbox" name="activity" value="cultural"> Cultural</label>
+            </div>
+            <div class="filter-category">
+                <h3>Group Type</h3>
+                <label><input type="checkbox" name="group" value="solo"> Solo</label>
+                <label><input type="checkbox" name="group" value="family"> Family</label>
+                <label><input type="checkbox" name="group" value="couple"> Couple</label>
+                <label><input type="checkbox" name="group" value="friends"> Friends</label>
+            </div>
+            <div class="filter-category">
+                <h3>Duration</h3>
+                <label><input type="checkbox" name="duration" value="short"> Short (1-3 days)</label>
+                <label><input type="checkbox" name="duration" value="medium"> Medium (4-7 days)</label>
+                <label><input type="checkbox" name="duration" value="long"> Long (8+ days)</label>
+            </div>
+        </aside>
+        <main class="main-content">
+            <div class="container" id="cardContainer">
+                <!-- Cards will be dynamically inserted here -->
+            </div>
+        </main>
+    </div>
+
+    <script>
+        const data = {{ data|tojson }}; // Assuming `data` is passed from Flask
+
+        function displayCards(cards) {
+            const container = document.getElementById('cardContainer');
+            container.innerHTML = ''; // Clear previous cards
+
+            cards.forEach(card => {
+                const cardElement = document.createElement('div');
+                cardElement.className = 'card';
+
+                cardElement.innerHTML = `
+                    <img src="${card.image_url}" alt="${card.title}">
+                    <div class="card-content">
+                        <h2>${card.title}</h2>
+                        <p><strong>Location:</strong> ${card.location}</p>
+                        <p><strong>Ratings:</strong> ${card.ratings}</p>
+                        <p><strong>Budget:</strong> ${card.budget}</p>
+                        <p><strong>Activity:</strong> ${card.activity}</p>
+                        <p><strong>Group Type:</strong> ${card.group_type}</p>
+                        <p><strong>Duration:</strong> ${card.duration}</p>
+                        <p class="city-description" id="description-${card.id}">${card.description.slice(0, 100)}... <span class="view-more" onclick="toggleDescription(${card.id})">View More</span></p>
+                    </div>
+                `;
+
+                container.appendChild(cardElement);
+            });
+        }
+
+        function toggleDescription(id) {
+            const desc = document.getElementById(`description-${id}`);
+            if (desc.classList.contains('full')) {
+                desc.classList.remove('full');
+                desc.innerHTML = desc.innerHTML.replace('... <span class="view-more" onclick="toggleDescription(' + id + ')">View More</span>', '... <span class="view-more" onclick="toggleDescription(' + id + ')">View More</span>');
+            } else {
+                desc.classList.add('full');
+                desc.innerHTML = desc.innerHTML.replace('... <span class="view-more" onclick="toggleDescription(' + id + ')">View More</span>', ' <span class="view-more" onclick="toggleDescription(' + id + ')">View Less</span>');
+            }
+        }
+
+        function filterCards() {
+            const selectedSeasons = Array.from(document.querySelectorAll('input[name="season"]:checked')).map(el => el.value);
+            const selectedRatings = Array.from(document.querySelectorAll('input[name="rating"]:checked')).map(el => el.value);
+            const selectedLocations = Array.from(document.querySelectorAll('input[name="location"]:checked')).map(el => el.value);
+            const selectedBudgets = Array.from(document.querySelectorAll('input[name="budget"]:checked')).map(el => el.value);
+            const selectedActivities = Array.from(document.querySelectorAll('input[name="activity"]:checked')).map(el => el.value);
+            const selectedGroups = Array.from(document.querySelectorAll('input[name="group"]:checked')).map(el => el.value);
+            const selectedDurations = Array.from(document.querySelectorAll('input[name="duration"]:checked')).map(el => el.value);
+
+            const filteredData = data.filter(item => 
+                (selectedSeasons.length === 0 || selectedSeasons.includes(item.best_time_to_visit)) &&
+                (selectedRatings.length === 0 || selectedRatings.includes(item.ratings)) &&
+                (selectedLocations.length === 0 || selectedLocations.includes(item.location)) &&
+                (selectedBudgets.length === 0 || selectedBudgets.includes(item.budget)) &&
+                (selectedActivities.length === 0 || selectedActivities.includes(item.activity)) &&
+                (selectedGroups.length === 0 || selectedGroups.includes(item.group_type)) &&
+                (selectedDurations.length === 0 || selectedDurations.includes(item.duration))
+            );
+
+            displayCards(filteredData);
+        }
+
+        document.querySelectorAll('input[type="checkbox"]').forEach(el => {
+            el.addEventListener('change', filterCards);
+        });
+
+        document.getElementById('searchInput').addEventListener('input', (event) => {
+            const searchTerm = event.target.value.toLowerCase();
+            const filteredData = data.filter(item => 
+                item.title.toLowerCase().includes(searchTerm) ||
+                item.description.toLowerCase().includes(searchTerm)
+            );
+            displayCards(filteredData);
+        });
+
+        // Initial display of all cards
+        displayCards(data);
+    </script>
+</body>
+</html>

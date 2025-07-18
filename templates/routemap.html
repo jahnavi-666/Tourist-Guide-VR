@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>India Map with Path</title>
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"/>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            overflow: hidden;
+        }
+
+        #map {
+            height: 100vh; /* Full height */
+            width: 100%;
+        }
+
+        .controls {
+            position: absolute;
+            top: 10px;
+            left: 10px;
+            background: white;
+            padding: 10px;
+            border-radius: 5px;
+            box-shadow: 0 2px 5px rgba(0,0,0,0.3);
+            z-index: 1000; /* Ensure controls are above the map */
+        }
+
+        .controls input {
+            margin-bottom: 10px;
+            padding: 5px;
+            width: 200px;
+        }
+
+        .controls button {
+            padding: 5px 10px;
+        }
+    </style>
+</head>
+<body>
+    <div class="controls">
+        <input type="text" id="source" placeholder="Enter Source">
+        <input type="text" id="destination" placeholder="Enter Destination">
+        <button onclick="showPath()">Show Path</button>
+    </div>
+    <div id="map"></div>
+
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-routing-machine/dist/leaflet-routing-machine.js"></script>
+    <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+    <script>
+        // Initialize the map
+        var map = L.map('map').setView([20.5937, 78.9629], 5); // Center on India
+
+        // Add tile layer
+        L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            maxZoom: 19,
+            attribution: '© OpenStreetMap contributors'
+        }).addTo(map);
+
+        // Create a geocoder
+        var geocoder = new L.Control.Geocoder.Nominatim();
+
+        // Create a routing control
+        var routingControl = L.Routing.control({
+            waypoints: [],
+            routeWhileDragging: true,
+            createMarker: function() { return null; } // No marker
+        }).addTo(map);
+
+        function showPath() {
+            var source = document.getElementById('source').value;
+            var destination = document.getElementById('destination').value;
+
+            geocoder.geocode(source, function(results) {
+                if (results.length > 0) {
+                    var sourceLatLng = results[0].center;
+
+                    geocoder.geocode(destination, function(results) {
+                        if (results.length > 0) {
+                            var destinationLatLng = results[0].center;
+
+                            // Set routing control waypoints
+                            routingControl.setWaypoints([
+                                L.latLng(sourceLatLng.lat, sourceLatLng.lng),
+                                L.latLng(destinationLatLng.lat, destinationLatLng.lng)
+                            ]);
+
+                            map.fitBounds(routingControl.getBounds());
+                        } else {
+                            alert('Destination not found');
+                        }
+                    });
+                } else {
+                    alert('Source not found');
+                }
+            });
+        }
+    </script>
+</body>
+</html>

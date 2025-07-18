@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome library -->
+
+    <style>
+        header {
+            background-color: #24b991;
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Fixed position */
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            width: 50px; /* Width of the logo */
+            height: auto; /* Maintain aspect ratio */
+            vertical-align: middle; /* Align vertically middle */
+        }
+
+        .name {
+            margin-left: 10px; /* Margin to separate logo and name */
+            font-size: 50px; /* Font size of the name */
+            font-family: 'Static Fauna', sans-serif;
+            margin-top: -0.5px; /* Adjust the margin-top to move the heading up */
+        }
+
+        .circle-crop {
+            width: 80px; /* Adjust the width and height as needed */
+            height: 80px;
+            border-radius: 45%; /* Crop the image into a circle */
+            overflow: hidden; /* Hide overflowing parts of the image */
+        }
+
+        .circle-crop img {
+            width: 100%; /* Ensure the image fills the container */
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
+        body {
+            background-color: #f0f0f0;
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+        }
+
+        .container {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-start;
+            padding: 20px;
+        }
+
+        .boxes {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 100px;
+        }
+
+        .box {
+            width: 200px;
+            height: 100px;
+            margin: 20px;
+            padding: 10px;
+            text-align: center;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            border-radius: 10px;
+            font-weight: bold;
+            font-size: 18px;
+            color: #fff; /* Text color */
+            transition: background-color 0.3s; /* Smooth transition for color change */
+            cursor: pointer; /* Change cursor to pointer */
+            border: 1px solid black;
+        }
+
+        /* Change box color on hover */
+        .box:hover {
+            background-color: #95d3c3; /* New color on hover */
+        }
+
+        /* Search bar */
+        .search-bar {
+            display: flex;
+            align-items: center;
+            background-color: #fff;
+            border-radius: 20px;
+            padding: 10px;
+            width: 300px;
+            border: 1px solid black;
+        }
+
+        .search-icon {
+            margin-left: auto;
+            color: #888;
+            cursor: pointer;
+        }
+
+        .search-icon i {
+            font-size: 20px;
+        }
+
+        .search-input {
+            border: none;
+            outline: none;
+            width: 100%;
+            padding: 5px;
+            font-size: 16px;
+        }
+
+        .location-icon {
+            margin-right: 10px;
+            color: #ff0000; /* Red color */
+            font-size: 20px;
+        }
+        .menu-icon {
+            position: absolute;
+            right: 4%; /* Move to extreme right */
+            color: #888; /* Menu icon color */
+            font-size: 20px;
+            cursor: pointer;
+            margin-top: -4%;
+        }
+        .tour-container {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 20px;
+            background-color: #ffffff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        .tour-image {
+            flex: 1;
+            max-width: 20%;
+            height: auto;
+            border-radius: 5px;
+        }
+        .tour-details {
+            flex: 2;
+            padding: 0 20px;
+        }
+        .tour-title {
+            font-size: 24px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .tour-rating {
+            color: #f39c12;
+        }
+        .tour-description {
+            font-size: 14px;
+            margin-bottom: 20px;
+        }
+        .tour-price {
+            font-size: 18px;
+            font-weight: bold;
+        }
+        .book-button {
+            background-color: #e74c3c;
+            color: #ffffff;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-left: 85%;
+        }
+        table {
+        width: 100%;
+        border-collapse: collapse;
+    }
+    th, td {
+        padding: 8px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    th {
+        background-color: #f2f2f2;
+    }
+    .image-cell img {
+        max-width: 100px;
+        max-height: 100px;
+        cursor: pointer; /* Add cursor pointer for clickable images */
+    }
+    /* Add this CSS to set fixed size for images */
+/* Add this CSS to set fixed size for images */
+#csv-table .image-cell img {
+    width: 100px; /* Set the width */
+    height: 100px; /* Set the height */
+    object-fit: cover; /* Maintain aspect ratio and cover the container */
+}
+
+
+    </style>
+</head>
+<body>
+    <div class="search-bar">
+        <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+        <input type="text" id="searchInput" class="search-input" placeholder="Destination" >
+        <div class="search-icon"><i class="fas fa-search"></i></div>
+    </div>
+    <!-- Table to display CSV data -->
+    <table id="csv-table">
+        <thead>
+            <tr>
+                <th>Place</th>
+                <th>Ratings</th>
+                <th>Ideal Duration</th>
+                <th>Best Time to Visit</th>
+                <th>Image</th>
+                <th>City Description</th>
+            </tr>
+        </thead>
+        <tbody>
+            <!-- Table rows will be inserted here dynamically -->
+        </tbody>
+    </table>
+
+    <script>
+        // JavaScript to fetch CSV data and populate the table
+        // JavaScript to fetch CSV data and populate the table
+// JavaScript to fetch CSV data and populate the table
+fetch('city_final(4).csv')
+    .then(response => response.text())
+    .then(csvData => {
+        const rows = csvData.split('\n');
+        const tableBody = document.querySelector('#csv-table tbody');
+
+        rows.forEach(row => {
+            const columns = row.split(',');
+            const tableRow = document.createElement('tr');
+
+            for (let i = 0; i < 5; i++) {
+                const tableCell = document.createElement('td');
+                if (i === 4) { // Image column
+                    const imageElement = document.createElement('img');
+                    const anchorElement = document.createElement('a'); // Create anchor element
+                    const imageUrl = encodeURIComponent(columns[i].trim()); // Encode URL
+                    anchorElement.href = `vr.html?url=${imageUrl}`; // Pass URL as query parameter
+                    imageElement.src = columns[i].trim();
+                    imageElement.width = '100'; // Set width
+                    imageElement.height = '100'; // Set height
+                    imageElement.classList.add('image-cell');
+                    anchorElement.appendChild(imageElement); // Append image to anchor
+                    tableCell.appendChild(anchorElement); // Append anchor to table cell
+                } else {
+                    tableCell.textContent = columns[i].trim();
+                }
+                tableRow.appendChild(tableCell);
+            }
+
+            // Concatenate remaining columns into one cell
+            const descriptionCell = document.createElement('td');
+            descriptionCell.textContent = columns.slice(5).join(', ').trim();
+            tableRow.appendChild(descriptionCell);
+
+            tableBody.appendChild(tableRow);
+        });
+    })
+    .catch(error => console.error('Error fetching CSV data:', error));
+
+
+    document.getElementById('searchInput').addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+            const tableRows = document.querySelectorAll('#csv-table tbody tr');
+
+            tableRows.forEach(row => {
+                const placeName = row.querySelector('td:first-child').textContent.toLowerCase();
+                if (placeName.includes(searchText)) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    </script>
+
+</body>
+</html>

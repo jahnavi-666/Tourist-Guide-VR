@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome library -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #2a1818;
+            color: black;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+        }
+
+        .banner {
+            position: relative;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            height: 800px; /* Adjust height as needed */
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .banner img {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .search-bar {
+            position: absolute;
+            top: 70%; /* Adjust the percentage to move the search bar down */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1; /* Ensure search bar is above the background image */
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input,
+        .search-bar button {
+            padding: 20px; /* Increase the padding to make the input and button larger */
+            font-size: 18px; /* Increase the font size for better visibility */
+            border-radius: 20px;
+        }
+
+        .search-icon {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .location-icon {
+            margin-right: 10px;
+            color: #ff0000; /* Red color */
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: flex-start; /* Align items at the start */
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-content {
+            margin-top: 10px;
+        }
+
+        .city-description {
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 100px; /* Limit height to show only a portion */
+            overflow: hidden; /* Hide overflow */
+        }
+
+        .city-description.full {
+            max-height: none; /* Show full description */
+            overflow: visible; /* Allow overflow */
+        }
+
+        .view-more {
+            color: blue;
+            cursor: pointer;
+        }
+
+        .banner-h1 {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 60px;
+            margin: 0;
+            color: white;
+            z-index: 1; /* Ensure the text is above the background image */
+        }
+        .filters {
+            width: 300px;
+            background-color: #fff;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+        }
+
+        .filter-category h3 {
+            margin-bottom: 10px;
+        }
+
+        .filter-category label {
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        .main-content {
+            flex-grow: 1;
+        }
+
+        .content-wrapper {
+            display: flex;
+            justify-content: space-between;
+        }
+    </style>
+</head>
+<body>
+    
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Big Ben, London">
+        <div class="navbar">
+            <div class="logo" style="font-family: 'Times New Roman', Times, serif;font-size: 50px;">Wander Wise</div>
+            <div>
+                <a href='/static/example2.html' style="font-size:25px;">Home</a>
+                <a href='/static/forum.html' style="font-size: 25px;">Forum</a>
+                <a href='/static/contact.html' style="font-size: 25px;">Review</a>
+            </div>
+        </div>
+        <h1 class="banner-h1">Search your next Holiday</h1>
+        <div class="search-bar">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <input type="text" id="searchInput" class="search-input" placeholder="Destination">
+            <div class="search-icon"><i class="fas fa-search"></i></div>
+        </div>
+    </div>
+    <div><h1 style="text-align: center; font-family: 'Times New Roman', Times, serif">Tapping the image will launch the immersive virtual reality (VR) viewing mode</h1></div>
+    <div class="content-wrapper">
+        <aside class="filters">
+            <h2>Filters</h2>
+            <!-- Filter section for best time to visit -->
+            <div class="filter-category">
+                <h3>Best Time to Visit</h3>
+                <label><input type="checkbox" name="season" value="winter"> Winter (Dec - Feb)</label>
+                <label><input type="checkbox" name="season" value="spring"> Spring (Mar - May)</label>
+                <label><input type="checkbox" name="season" value="summer"> Summer (Jun - Aug)</label>
+                <label><input type="checkbox" name="season" value="autumn"> Autumn (Sep - Nov)</label>
+            </div>
+            <!-- Filter section for ratings -->
+            <!-- Filter section for ratings -->
+<div class="filter-category">
+    <h3>Ratings</h3>
+    <input type="text" id="ratingInput" placeholder="Enter rating (1-5)">
+</div>
+
+        </aside>
+        <main class="main-content">
+            <div class="container" id="cardContainer">
+                <!-- Card elements will be inserted here dynamically -->
+            </div>
+        </main>
+    </div>
+    
+    <script>
+        fetch('/static/city_final(4).csv')
+        .then(response => response.text())
+        .then(csvData => {
+            const rows = csvData.split('\n');
+            const cardContainer = document.getElementById('cardContainer');
+    
+            rows.forEach((row, index) => {
+                // Skip the first row (header row)
+                if (index === 0) return;
+    
+                const columns = row.split(',');
+                const card = document.createElement('div');
+                card.classList.add('card');
+    
+                // Wrap image inside anchor tag with VR page URL
+                const vrPageURL = `/static/vr.html?url=${encodeURIComponent(columns[4].trim())}&audio=${encodeURIComponent(columns[6].trim())}`;
+                const imageAnchor = document.createElement('a');
+                imageAnchor.href = vrPageURL;
+                const image = document.createElement('img');
+                image.src = columns[4].trim();
+                imageAnchor.appendChild(image);
+                card.appendChild(imageAnchor);
+    
+                // Card content
+                const cardContent = document.createElement('div');
+                cardContent.classList.add('card-content');
+    
+                // Place
+                const place = document.createElement('h3');
+                place.textContent = columns[0].trim();
+                cardContent.appendChild(place);
+    
+                // Ratings
+                const ratings = document.createElement('p');
+                ratings.classList.add('ratings');
+                ratings.textContent = `Ratings: ${columns[1].trim()}`;
+                cardContent.appendChild(ratings);
+    
+                // Ideal Duration
+                const idealDuration = document.createElement('p');
+                idealDuration.classList.add('idealDuration');
+                idealDuration.textContent = `Ideal Duration: ${columns[2].trim()}`;
+                cardContent.appendChild(idealDuration);
+    
+                // Best Time to Visit
+                const bestTime = document.createElement('p');
+                bestTime.classList.add('bestTime');
+                bestTime.textContent = `Best Time to Visit: ${columns[3].trim()}`;
+                cardContent.appendChild(bestTime);
+    
+                // City Description
+                const cityDescription = document.createElement('p');
+                cityDescription.classList.add('city-description');
+                const descriptionText = columns.slice(5).join(', ').trim();
+                cityDescription.textContent = descriptionText.substring(0, 100); // Show only first 100 characters
+                cardContent.appendChild(cityDescription);
+    
+                // View More Button
+                const viewMoreBtn = document.createElement('span');
+                viewMoreBtn.classList.add('view-more');
+                viewMoreBtn.textContent = 'View More';
+                viewMoreBtn.addEventListener('click', () => {
+                    if (!cityDescription.classList.contains('full')) {
+                        // Display full description
+                        cityDescription.classList.add('full');
+                        cityDescription.textContent = descriptionText; // Show full description
+                        viewMoreBtn.textContent = 'View Less';
+                    } else {
+                        // Hide full description
+                        cityDescription.classList.remove('full');
+                        cityDescription.textContent = descriptionText.substring(0, 100); // Show only first 100 characters
+                        viewMoreBtn.textContent = 'View More';
+                    }
+                });
+    
+                cardContent.appendChild(viewMoreBtn);
+                card.appendChild(cardContent);
+                cardContainer.appendChild(card);
+            });
+        })
+        .catch(error => console.error('Error fetching CSV data:', error));
+    
+        // Function to filter cards based on selected criteria
+        function filterCards() {
+            const selectedSeasons = Array.from(document.querySelectorAll('input[name="season"]:checked')).map(checkbox => checkbox.value);
+            const ratingInput = document.getElementById('ratingInput').value;
+            const selectedRatings = ratingInput ? [ratingInput] : []; // Handle rating input as a list
+    
+            const selectedLocations = Array.from(document.querySelectorAll('input[name="location"]:checked')).map(checkbox => checkbox.value);
+            const selectedBudgets = Array.from(document.querySelectorAll('input[name="budget"]:checked')).map(checkbox => checkbox.value);
+            const selectedActivities = Array.from(document.querySelectorAll('input[name="activity"]:checked')).map(checkbox => checkbox.value);
+            const selectedDurations = Array.from(document.querySelectorAll('input[name="duration"]:checked')).map(checkbox => checkbox.value);
+            const selectedGroups = Array.from(document.querySelectorAll('input[name="group"]:checked')).map(checkbox => checkbox.value);
+    
+            const cards = document.querySelectorAll('.card');
+            cards.forEach(card => {
+                const cardBestTime = card.querySelector('.bestTime').textContent.toLowerCase();
+                const cardRating = card.querySelector('.ratings').textContent.toLowerCase();
+                const cardDuration = card.querySelector('.idealDuration').textContent.toLowerCase();
+                const cardDescription = card.querySelector('.city-description').textContent.toLowerCase();
+    
+                const matchesSeason = selectedSeasons.length === 0 || selectedSeasons.some(season => cardBestTime.includes(season));
+                const matchesRating = selectedRatings.length === 0 || selectedRatings.some(rating => cardRating.includes(rating));
+                const matchesDuration = selectedDurations.length === 0 || selectedDurations.some(duration => cardDuration.includes(duration));
+    
+                if (matchesSeason && matchesRating && matchesDuration) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        }
+    
+        // Add event listeners to all filters
+        document.querySelectorAll('input[type="checkbox"]').forEach(checkbox => {
+            checkbox.addEventListener('change', filterCards);
+        });
+    
+        // Add event listener to the rating input
+        document.getElementById('ratingInput').addEventListener('input', filterCards);
+    
+        // Add event listener to the search input
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+    
+            cards.forEach(card => {
+                const placeName = card.querySelector('h3').textContent.toLowerCase();
+                if (searchText === "" || placeName.includes(searchText)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>

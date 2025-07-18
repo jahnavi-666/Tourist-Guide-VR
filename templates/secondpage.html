@@ -1,0 +1,341 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSV Data</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome library -->
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            background-color: #f0f0f0;
+        }
+
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            color: white;
+            position: absolute;
+            top: 20px;
+            left: 0;
+            right: 0;
+        }
+
+        .navbar a {
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+        }
+
+        .navbar a:hover {
+            background-color: #2a1818;
+            color: black;
+        }
+
+        .logo {
+            color: white;
+            font-size: 24px;
+        }
+
+        .banner {
+            position: relative;
+            text-align: center;
+            color: white;
+            overflow: hidden;
+            height: 800px; /* Adjust height as needed */
+        }
+
+        .banner::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+        }
+
+        .banner img {
+            width: 100%;
+            height: auto;
+            box-shadow: 0 0 20px 0 rgba(0, 0, 0, 0.5);
+        }
+
+        .search-bar {
+            position: absolute;
+            top: 70%; /* Adjust the percentage to move the search bar down */
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(0, 0, 0, 0.5);
+            padding: 20px;
+            z-index: 1; /* Ensure search bar is above the background image */
+            display: flex;
+            align-items: center;
+        }
+
+        .search-bar input,
+.search-bar button {
+    padding: 20px; /* Increase the padding to make the input and button larger */
+    font-size: 18px; /* Increase the font size for better visibility */
+    border-radius: 20px;
+}
+
+
+        .search-icon {
+            color: white;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .location-icon {
+            margin-right: 10px;
+            color: #ff0000; /* Red color */
+            font-size: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: space-around;
+            align-items: flex-start; /* Align items at the start */
+        }
+
+        .card {
+            width: 300px;
+            background-color: #fff;
+            border-radius: 10px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin: 20px;
+            padding: 20px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+        }
+
+        .card img {
+            width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        .card-content {
+            margin-top: 10px;
+        }
+
+        .city-description {
+            font-size: 14px;
+            line-height: 1.5;
+            max-height: 100px; /* Limit height to show only a portion */
+            overflow: hidden; /* Hide overflow */
+        }
+
+        .city-description.full {
+            max-height: none; /* Show full description */
+            overflow: visible; /* Allow overflow */
+        }
+
+        .view-more {
+            color: blue;
+            cursor: pointer;
+        }
+
+        .banner-h1 {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 60px;
+    margin: 0;
+    color: white;
+    z-index: 1; /* Ensure the text is above the background image */
+}
+
+    </style>
+</head>
+<body>
+    
+    <div class="banner">
+        <img src="{{ url_for('static', filename='images/banner.jpg') }}" alt="Big Ben, London">
+        <div class="navbar">
+            <div class="logo" style="font-family: 'Times New Roman', Times, serif;font-size: 50px;">Wander Wise</div>
+            <div>
+                <a href='/static/example2.html' style="font-size:25px;">Home</a>
+                <a href='/static/forum.html' style="font-size: 25px;">Forum</a>
+                <a href='/static/contact.html' style="font-size: 25px;">Review</a>
+                
+            </div>
+        </div>
+        <h1 class="banner-h1">Search your next Holiday</h1>
+        <div class="search-bar">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <input type="text" id="searchInput" class="search-input" placeholder="Destination">
+            <div class="search-icon"><i class="fas fa-search"></i></div>
+        </div>
+    </div>
+    <div><h1 style="text-align: center; font-family: 'Times New Roman', Times, serif">Tapping the image will launch the immersive virtual reality (VR) viewing mode</h1></div>
+    <div class="filter">
+        <label for="sortBy">Sort By:</label>
+        <select id="sortBy">
+            <option value="place">Place</option>
+            <option value="ratings">Ratings</option>
+            <option value="idealDuration">Ideal Duration</option>
+            <option value="bestTime">Best Time to Visit</option>
+        </select>
+    </div>
+    <div class="container" id="cardContainer">
+        <!-- Card elements will be inserted here dynamically -->
+    </div>
+    <script>
+        // JavaScript to fetch CSV data and create cards
+        fetch('/static/city_final(4).csv')
+            .then(response => response.text())
+            .then(csvData => {
+                const rows = csvData.split('\n');
+                const cardContainer = document.getElementById('cardContainer');
+
+                rows.forEach((row, index) => {
+                    // Skip the first row (header row)
+                    if (index === 0) return;
+
+                    const columns = row.split(',');
+                    const card = document.createElement('div');
+                    card.classList.add('card');
+
+                    // Wrap image inside anchor tag with VR page URL
+                    
+                    const vrPageURL = `/static/vr.html?url=${encodeURIComponent(columns[4].trim())}`;
+                    const imageAnchor = document.createElement('a');
+                    imageAnchor.href = vrPageURL;
+                    const image = document.createElement('img');
+                    image.src = columns[4].trim();
+                    imageAnchor.appendChild(image);
+                    card.appendChild(imageAnchor);
+
+                    // Card content
+                    const cardContent = document.createElement('div');
+                    cardContent.classList.add('card-content');
+
+                    // Place
+                    const place = document.createElement('h3');
+                    place.textContent = columns[0].trim();
+                    cardContent.appendChild(place);
+
+                    // Ratings
+                    const ratings = document.createElement('p');
+                    ratings.textContent = `Ratings: ${columns[1].trim()}`;
+                    cardContent.appendChild(ratings);
+
+                    // Ideal Duration
+                    const idealDuration = document.createElement('p');
+                    idealDuration.textContent = `Ideal Duration: ${columns[2].trim()}`;
+                    cardContent.appendChild(idealDuration);
+
+                    // Best Time to Visit
+                    const bestTime = document.createElement('p');
+                    bestTime.textContent = `Best Time to Visit: ${columns[3].trim()}`;
+                    cardContent.appendChild(bestTime);
+
+                    // City Description
+                    const cityDescription = document.createElement('p');
+                    cityDescription.classList.add('city-description');
+                    const descriptionText = columns.slice(5).join(', ').trim();
+                    cityDescription.textContent = descriptionText.substring(0, 100); // Show only first 100 characters
+                    cardContent.appendChild(cityDescription);
+
+                    // View More Button
+                    const viewMoreBtn = document.createElement('span');
+                    viewMoreBtn.classList.add('view-more');
+                    viewMoreBtn.textContent = 'View More';
+                    viewMoreBtn.addEventListener('click', () => {
+                        if (!cityDescription.classList.contains('full')) {
+                            // Display full description
+                            cityDescription.classList.add('full');
+                            cityDescription.textContent = descriptionText; // Show full description
+                            viewMoreBtn.textContent = 'View Less';
+                        } else {
+                            // Hide full description
+                            cityDescription.classList.remove('full');
+                            cityDescription.textContent = descriptionText.substring(0, 100); // Show only first 100 characters
+                            viewMoreBtn.textContent = 'View More';
+                        }
+                    });
+
+                    cardContent.appendChild(viewMoreBtn);
+                    card.appendChild(cardContent);
+                    cardContainer.appendChild(card);
+                });
+            })
+            .catch(error => console.error('Error fetching CSV data:', error));
+
+        // Add event listener to the search input
+        document.getElementById('searchInput').addEventListener('input', function() {
+            const searchText = this.value.toLowerCase();
+            const cards = document.querySelectorAll('.card');
+
+            cards.forEach(card => {
+                const placeName = card.querySelector('h3').textContent.toLowerCase();
+                if (placeName.includes(searchText)) {
+                    card.style.display = 'block';
+                } else {
+                    card.style.display = 'none';
+                }
+            });
+        });
+        // Function to sort cards based on selected column
+function sortCards(columnName) {
+    const cardContainer = document.getElementById('cardContainer');
+    const cards = Array.from(cardContainer.getElementsByClassName('card'));
+    cards.sort((a, b) => {
+        const aValue = a.querySelector(`.${columnName}`).textContent.toLowerCase();
+        const bValue = b.querySelector(`.${columnName}`).textContent.toLowerCase();
+        return aValue.localeCompare(bValue);
+    });
+    cards.forEach(card => cardContainer.appendChild(card));
+}
+
+// Event listener for filter dropdown
+document.getElementById('sortBy').addEventListener('change', function() {
+    const selectedColumn = this.value;
+    sortCards(selectedColumn);
+});
+// Function to filter cards based on selected column
+function filterCards(columnName, searchText) {
+    const cardContainer = document.getElementById('cardContainer');
+    const cards = cardContainer.getElementsByClassName('card');
+
+    for (const card of cards) {
+        const cardContent = card.querySelector(`.${columnName}`).textContent.toLowerCase();
+        if (cardContent.includes(searchText)) {
+            card.style.display = 'block';
+        } else {
+            card.style.display = 'none';
+        }
+    }
+}
+
+// Event listener for search input
+document.getElementById('searchInput').addEventListener('input', function() {
+    const searchText = this.value.toLowerCase();
+    const selectedColumn = document.getElementById('sortBy').value;
+    filterCards(selectedColumn, searchText);
+});
+
+// Event listener for filter dropdown
+document.getElementById('sortBy').addEventListener('change', function() {
+    const searchText = document.getElementById('searchInput').value.toLowerCase();
+    const selectedColumn = this.value;
+    filterCards(selectedColumn, searchText);
+});
+
+    </script>
+</body>
+</html>

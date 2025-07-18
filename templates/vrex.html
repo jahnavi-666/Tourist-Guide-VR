@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR View</title>
+</head>
+<body>
+    <h1>VR View</h1>
+    <div id="vrContainer">
+        <iframe id="vrFrame" src="" width="800" height="600" frameborder="0"></iframe>
+    </div>
+    <audio id="audioPlayer" controls>
+        <source id="audioSource" src="" type="audio/mp3">
+        Your browser does not support the audio element.
+    </audio>
+    <script>
+        // Get the URL parameters
+        const urlParams = new URLSearchParams(window.location.search);
+        const imageUrl = urlParams.get('url');
+        const audioUrl = urlParams.get('audio');
+
+        // Set the iframe source for VR
+        const vrFrame = document.getElementById('vrFrame');
+        vrFrame.src = imageUrl;
+
+        // Set the audio source
+        const audioPlayer = document.getElementById('audioPlayer');
+        const audioSource = document.getElementById('audioSource');
+        audioSource.src = audioUrl;
+    </script>
+</body>
+</html>

@@ -1,0 +1,467 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tourism Website</title>
+  <style>
+    /* Add CSS styles for positioning and styling elements */
+    /* For simplicity, some styles are inline; you can move them to an external CSS file */
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+    header {
+      background-image: url('static/images/WANDER WISE.jpg');
+      background-size : cover;
+      background-position: center;
+      height: 100vh;
+      display: flex;
+      align-items: center;
+      color: rgb(3, 63, 7);
+      font-family: "Times New Roman", Times, serif;
+      text-align: left;
+      padding-left: 80px;
+      position: relative;
+    }
+    .login-button {
+      position: relative;
+      left: 20px;
+      top: -20px;
+      padding: 10px 20px;
+      background-color: #51270e;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    .header-content {
+      width: 100%;
+      max-width: 800px; /* Adjust as needed */
+      margin: 10 auto; /* Center horizontally */
+    }
+
+    .hi{
+        position: relative;
+      left: 20px;
+      top: -50px;
+    }
+
+        .explore-more {
+      margin-top: 20px;
+      font-size: 24px;
+    }
+    </style>
+    <style>
+    .container {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    margin: 20px auto;
+    max-width: 800px;
+  }
+  
+  .box {
+    text-align: center;
+    font-family: "Times New Roman", Times, serif;
+  }
+
+  .box img {
+    width: 250px;
+    height: 200px;
+    object-fit: cover;
+    border-radius: 10px;
+    margin-bottom: 10px;
+  }
+
+  .box p {
+    font-size: 18px;
+    line-height: 1.5;
+    font-family: "Times New Roman", Times, serif;
+  } 
+  </style>
+
+
+
+<style>
+    .containers {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 100px 100px; /* Increased padding on both sides */
+    max-width: 800px;
+    margin: auto;
+  }
+
+  .headings {
+    flex: 1;
+    padding-right: 100px; /* Adjust spacing */
+    text-align: left; /* Align heading to the left */
+  }
+
+  .contents {
+    flex: 2;
+    padding-left: 20px; /* Adjust spacing */
+    border-left: 1px solid #ccc;
+    text-align: right; /* Align paragraph to the right */
+  }
+
+  h1 {
+    font-size: 28px;
+    margin-bottom: 10px;
+    color: #333;
+  }
+
+  p {
+    font-size: 16px;
+    line-height: 1.6;
+    color: #666;
+  }
+
+</style>
+<!--review part-->
+<style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+  
+    .containeri {
+      max-width: 800px;
+      margin: auto;
+      padding: 50px;
+      position: relative;
+    }
+  
+    .headingi {
+    flex: 1;
+    padding-right: 50px; /* Adjust spacing */
+    text-align: center;
+    }
+  
+    .reviews {
+      display: flex;
+      justify-content: space-between;
+      margin-top: 20px; /* Adjust spacing */
+    }
+  
+    .review-box {
+      width: 45%; /* Adjust width of each review box */
+      height: 50%;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+      margin-bottom: 20px;
+      border: 1px solid #ccc;
+    }
+  
+    .stars {
+      display: flex;
+      justify-content: flex-start;
+      margin-bottom: 10px;
+    }
+  
+    .star {
+      color: gold;
+      font-size: 20px;
+      margin-right: 5px;
+    }
+  
+    p {
+      font-size: 16px;
+      line-height: 1.6;
+      color: #666;
+    }
+  </style>
+
+<!--sliding photos-->
+<style>
+    * {box-sizing: border-box;}
+    .slideshow-container {
+      max-width: 900px;
+      position: relative;
+      margin: auto;
+    }
+    .mySlides {
+      display: none;
+    }
+    img {vertical-align: middle;}
+    
+    /* Sliding animation */
+    @keyframes slide {
+      from {opacity: .4} 
+      to {opacity: 1}
+    }
+    
+    /* The dots/bullets/indicators */
+    .dot {
+      cursor: pointer;
+      height: 15px;
+      width: 15px;
+      margin: 0 2px;
+      background-color: #bbb;
+      border-radius: 50%;
+      display: inline-block;
+      transition: background-color 0.6s ease;
+    }
+    
+    .active, .dot:hover {
+      background-color: #717171;
+    }
+    
+    /* Fading animation */
+    .fade {
+      animation-name: fade;
+      animation-duration: 1.5s;
+    }
+    .p1 {
+  font-family: Georgia, serif;
+}
+    </style>
+    <!--for contact us-->
+    <style>
+      .containery {
+        max-width: 1200px;
+        margin: 50px auto;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+    .contact-info {
+        flex: 1;
+        padding: 150px;
+    }
+    .contact-info h2 {
+        color: #333;
+        font-size: 24px;
+        margin-bottom: 20px;
+    }
+    .contact-info p {
+        color: #666;
+        font-size: 16px;
+        line-height: 1.6;
+    }
+    .contact-image img {
+        width: 400px;
+        height: 400px;
+        border-radius: 10px;
+    }
+    .login-popup {
+        display: none;
+        position: fixed;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        background-color: #a5b46b;
+        padding: 20px;
+        border: 1px solid #ccc;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        z-index: 9999;
+        width: 400px; /* Adjust the width as needed */
+        height: 500px;
+        border-radius: 5px;
+    }
+    .login-popup input[type="text"],
+    .login-popup input[type="password"] {
+        width: 100%;
+        padding: 10px;
+        margin: 5px 0;
+        box-sizing: border-box;
+        border-radius: 5px;
+        border: 1px solid #709c84;
+    }
+    .login-popup input[type="submit"] {
+        width: 100%;
+        padding: 10px;
+        margin-top: 10px;
+        background-color: #525b52;
+        color: white;
+        border: none;
+        cursor: pointer;
+        border-radius: 5px;
+        border: 1px solid #709c84;
+    }
+      </style>
+
+</head>
+<body>
+
+  <header>
+    <div class="header-content">
+      <h1 class="hi" class="margin:0">Discover, Explore, Wander: Your Adventure Awaits!</h1>
+      <a href="#popular-destinations"><button class="login-button">Explore More</button></a><br><br>
+      <div>
+        <button id="getStartedButton" class="login-button" onclick="openLoginPopup()">Get Started</button>
+      </div>
+    </div>
+  </header>
+  <div class="containers">
+    <div class="headings">
+      <h1>Discovering World Like Never Before</h1>
+    </div>
+    <div class="contents">
+      <p>Embark on an odyssey through the heart of India's rich heritage, from the majestic forts of Rajasthan to the tranquil backwaters of Kerala. Immerse yourself in the vibrant colors of its festivals, the tantalizing flavors of its cuisine, and the warmth of its people. Join us as we uncover the timeless beauty and diversity of this enchanting land, where every corner tells a story and every moment is a celebration.</p>
+    </div>
+  </div>
+  <h1 id="popular-destinations" style="text-align: center;">Popular Destinations</h1>
+  <div class="container">
+    <div class="box">
+      <img src="{{ url_for('static', filename='images/pic1.jpg') }}" alt="Ajmer Sharif Dargah">
+      <p>Ajmer Sharif Dargah - A place of spiritual solace drawing devotees from around the world.</p>
+    </div>
+    <div class="box">
+      <img src="{{ url_for('static', filename='images/pic2.jpg') }}" alt="Taragarh Fort">
+      <p>Taragarh Fort - Explore the ancient walls and immerse yourself in tales of valor and history.</p>
+    </div>
+    <div class="box">
+      <img src="{{ url_for('static', filename='images/pic3.jpg') }}" alt="Ana Sagar Lake">
+      <p>Ana Sagar Lake - Experience tranquility amidst the bustling city, a serene oasis for relaxation.</p>
+    </div>
+  </div>
+  <div class="containeri">
+    <h1 class="headingi">Reviews</h1>
+    
+    <div class="reviews">
+      <!-- Review 1 -->
+      <div class="review-box">
+        <div class="stars">
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+        </div>
+        <p>"Absolutely loved my experience with Wander Wise! Booking was a breeze, and the trip exceeded all expectations. Can't wait to explore more destinations with them!"</p>
+      </div>
+      
+      <!-- Review 2 -->
+      <div class="review-box">
+        <div class="stars">
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9734;</span>
+        </div>
+        <p>"Fantastic experience! The service was so easy and accurate to use. Highly recommend!"</p>
+      </div>
+    </div>
+  
+    <div class="reviews">
+      <!-- Review 3 -->
+      <div class="review-box">
+        <div class="stars">
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+        </div>
+        <p>"Impressed with the professionalism and responsiveness of the customer service team."</p>
+      </div>
+  
+      <!-- Review 4 -->
+      <div class="review-box">
+        <div class="stars">
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9733;</span>
+          <span class="star">&#9734;</span>
+        </div>
+        <p>"Booked a last-minute getaway through Wander Wise, and it was one of the best decisions I've made!"</p>
+      </div>
+    </div>
+  </div>
+<br>
+<br>
+<br>
+<h1 style="text-align: center;" class="p1">A Country like No other!</h1>
+<br><br>  
+<div class="slideshow-container">
+
+    <div class="mySlides fade">
+        <img src="{{ url_for('static', filename='images/i3.jpg') }}" style="width:100%">
+    </div>
+    
+    <div class="mySlides fade">
+      <img src="{{ url_for('static', filename='images/i2.jpg') }}" style="width:100%">
+    </div>
+    
+    <div class="mySlides fade">
+      <img src="{{ url_for('static', filename='images/i1.jpg') }}" style="width:100%">
+    </div>
+    
+    
+    
+    </div>
+    <br>
+    
+    <div style="text-align:center">
+      <span class="dot"></span> 
+      <span class="dot"></span> 
+      <span class="dot"></span> 
+    </div>
+    
+    <script>
+    var slideIndex = 0;
+    showSlides();
+    
+    function showSlides() {
+      var i;
+      var slides = document.getElementsByClassName("mySlides");
+      var dots = document.getElementsByClassName("dot");
+      for (i = 0; i < slides.length; i++) {
+        slides[i].style.display = "none";  
+      }
+      slideIndex++;
+      if (slideIndex > slides.length) {slideIndex = 1}    
+      for (i = 0; i < dots.length; i++) {
+        dots[i].className = dots[i].className.replace(" active", "");
+      }
+      slides[slideIndex-1].style.display = "block";  
+      dots[slideIndex-1].className += " active";
+      setTimeout(showSlides, 2000); // Change image every 2 seconds
+    }
+    </script>
+
+<div class="containery">
+  <div class="contact-info">
+      <h2>Contact Us</h2>
+      <p><strong>Address:</strong> Hyderabad, India</p>
+      <p><strong>Email:</strong> jnnss@example.com</p>
+      <p><strong>Phone:</strong> +91 234 567 890</p>
+  </div>
+  <div class="contact-image">
+      <img src="{{ url_for('static', filename='images/Screenshot(41).jpg') }}" alt="Location Image">
+  </div>
+</div>
+
+
+<div id="loginPopup" class="login-popup">
+    <h2>Login</h2>
+    <form id="registerForm" action="/register" method="POST">
+      <label for="username">Username:</label>
+      <input type="text" id="username" name="username" placeholder="Username" required>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" placeholder="Password" required>
+      <br>
+      <input type="submit" value="Register">
+      
+
+    </form>
+  
+    <br><br>
+    <p>Don't have an account? <a href="#">Sign up</a></p>
+    <p>Forgot your password? <a href="#">Reset password</a></p>
+</div>
+
+<script>
+    function openLoginPopup() {
+    var popup = document.getElementById("loginPopup");
+    popup.style.display = "block";
+}
+</script>
+</body>
+</html>
