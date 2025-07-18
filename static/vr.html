@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>VR View</title>
+    <script src="https://aframe.io/releases/1.2.0/aframe.min.js"></script>
+</head>
+<body>
+    <div id="vr-container">
+        <!-- VR View will be displayed here -->
+    </div>
+
+    <script>
+        window.onload = function() {
+            // Get the URL parameter
+            const urlParams = new URLSearchParams(window.location.search);
+            const imageUrl = urlParams.get('url');
+
+            // Display the VR view of the image
+            displayVR(imageUrl);
+        };
+
+        function displayVR(imageUrl) {
+            // Create a VR view using A-Frame
+            const vrContainer = document.getElementById('vr-container');
+            vrContainer.innerHTML = `
+                <a-scene>
+                    <a-assets>
+                        <img id="image" src="${imageUrl}">
+                    </a-assets>
+                    <a-sky src="#image" rotation="0 -130 0"></a-sky>
+                </a-scene>
+            `;
+        }
+    </script>
+</body>
+</html>

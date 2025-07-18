@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rating</title>
+    <style>
+        body {
+          background-image: url('/static/images/contactback.jpg');
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+        .rating {
+            display: flex;
+            flex-direction: row-reverse;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .rating input {
+            display: none;
+        }
+
+        .rating label {
+            cursor: pointer;
+            font-size: 150px;
+            color: #171616;
+            margin: 0 5px;
+        }
+
+        .rating label:before {
+            content: '\2605'; /* Unicode character for a star */
+        }
+
+        .rating input:checked ~ label {
+            color: #fdd835; /* Yellow color for selected stars */
+        }
+        .center {
+                margin: 0;
+                position: absolute;
+                top: 60%;
+                left: 51.5%;
+                -ms-transform: translate(-50%, -50%);
+                transform: translate(-50%, -50%);
+            }
+    </style>
+</head>
+<body>
+
+    <p style="font-size: 30px;text-align: center;color:rgb(7, 7, 7);" >PLEASE ENTER YOUR VALUABLE FEEDBACK</p>
+    <div class="rating">
+        <input type="radio" id="star5" name="rating" value="5">
+        <label for="star5"></label>
+        <input type="radio" id="star4" name="rating" value="4">
+        <label for="star4"></label>
+        <input type="radio" id="star3" name="rating" value="3">
+        <label for="star3"></label>
+        <input type="radio" id="star2" name="rating" value="2">
+        <label for="star2"></label>
+        <input type="radio" id="star1" name="rating" value="1">
+        <label for="star1"></label>
+    </div>
+    <p style="font-size: 30px;text-align: center;color:rgb(14, 14, 14);">Hope you enjoyed the experience!!</p>
+    <p style="font-size: 40px;text-align: center;color:rgb(15, 15, 15);font-style: italic;">THANK YOU</p>
+    <form id="myForm" onsubmit="return validateForm()" action="/static/example.html">
+        <input class="center" type="submit" value="Finish">
+      </form>
+      <script>
+          function validateForm() {
+              
+              return false;
+            }
+            return true;
+      </script>
+</body>
+</html>

@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Discussion Forum</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            background-image: url('/static/images/pic5.jpg');
+            font-size: 30px;
+        }
+        h1 {
+            text-align: center;
+        }
+        .forum-container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .forum-post {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            margin-bottom: 20px;
+        }
+        .post-title {
+            font-size: 18px;
+            margin-bottom: 5px;
+        }
+        .post-content {
+            font-size: 16px;
+        }
+        .post-meta {
+            font-size: 14px;
+            color: #666;
+        }
+        .reply {
+            margin-left: 20px;
+            border-left: 2px solid #ccc;
+            padding-left: 10px;
+        }
+        .reply-content {
+            font-size: 14px;
+            color: #333;
+        }
+        .reply-form {
+            margin-top: 10px;
+            display: none; /* Hide reply form by default */
+        }
+        .reply-form textarea {
+            width: 100%;
+            height: 80px;
+            margin-bottom: 5px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="forum-container">
+    <h1 style="font-family: 'Times New Roman', Times, serif;">Discussion Forum</h1>
+    
+    <!-- Add New Post Form -->
+    <h2 style="font-family: 'Times New Roman', Times, serif;">Add New Post</h2>
+    <form id="new-post-form">
+        <label for="post-name">Your Name:</label><br>
+        <input type="text" id="post-name" name="post-name" required><br>
+        <label for="post-title">Title:</label><br>
+        <input type="text" id="post-title" name="post-title" required><br>
+        <label for="post-content">Content:</label><br>
+        <textarea id="post-content" name="post-content" rows="4" required></textarea><br>
+        <button type="submit">Post</button>
+    </form>
+    <div class="forum-post">
+        <div class="post-title">How to Plan a Backpacking Trip?</div>
+        <div class="post-content">
+            I'm planning my first backpacking trip and could use some tips on route planning, gear essentials, and safety precautions. Any seasoned backpackers willing to share their expertise?
+        </div>
+        <div class="post-meta">
+            Posted by JohnDoe on April 1, 2024
+            <button class="reply-button" data-post-id="1">Reply</button>
+            <!-- Reply form -->
+            <form class="reply-form" data-post-id="1">
+                <textarea placeholder="Write your reply..." required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+            <!-- Replies -->
+            <div class="replies">
+                <div class="reply">
+                    <div class="reply-content">I recommend checking out some online forums and blogs for detailed guides on backpacking routes and gear recommendations. Safety should always be your top priority!</div>
+                    <div class="post-meta">Posted by Backpacker123 on April 2, 2024</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Example Post 2 -->
+    <div class="forum-post">
+        <div class="post-title">Best Travel Destinations for Solo Female Travelers?</div>
+        <div class="post-content">
+            As a solo female traveler, safety is my top priority. Can anyone recommend travel destinations that are safe and welcoming for solo female travelers?
+        </div>
+        <div class="post-meta">
+            Posted by JaneSmith on March 30, 2024
+            <button class="reply-button" data-post-id="2">Reply</button>
+            <!-- Reply form -->
+            <form class="reply-form" data-post-id="2">
+                <textarea placeholder="Write your reply..." required></textarea>
+                <button type="submit">Submit</button>
+            </form>
+            <!-- Replies -->
+            <div class="replies">
+                <div class="reply">
+                    <div class="reply-content">Southeast Asia, particularly Thailand, Vietnam, and Indonesia, is very popular among solo female travelers due to its affordability, safety, and vibrant culture.</div>
+                    <div class="post-meta">Posted by WanderlustGirl on March 31, 2024</div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+</div>
+
+<script>
+    // Function to handle form submission
+    document.getElementById("new-post-form").addEventListener("submit", function(event) {
+        event.preventDefault(); // Prevent default form submission
+        
+        // Get form values
+        var name = document.getElementById("post-name").value;
+        var title = document.getElementById("post-title").value;
+        var content = document.getElementById("post-content").value;
+        
+        // Create new post HTML
+        var newPostHTML = `
+            <div class="forum-post" data-post-id="${document.querySelectorAll('.forum-post').length + 1}">
+                <div class="post-title">${title}</div>
+                <div class="post-content">${content}</div>
+                <div class="post-meta">Posted by ${name} on ${new Date().toLocaleDateString()}</div>
+                <button class="reply-button" data-post-id="${document.querySelectorAll('.forum-post').length + 1}">Reply</button>
+                <!-- Reply form -->
+                <form class="reply-form" data-post-id="${document.querySelectorAll('.forum-post').length + 1}">
+                    <textarea placeholder="Write your reply..." required></textarea>
+                    <button type="submit">Submit</button>
+                </form>
+                <!-- Replies -->
+                <div class="replies"></div>
+            </div>
+        `;
+        
+        // Insert new post HTML after existing posts
+        document.querySelector(".forum-container").insertAdjacentHTML("beforeend", newPostHTML);
+        
+        // Clear form fields
+        document.getElementById("post-name").value = "";
+        document.getElementById("post-title").value = "";
+        document.getElementById("post-content").value = "";
+    });
+    
+    // Function to handle reply button click
+    document.body.addEventListener("click", function(event) {
+        if (event.target.classList.contains("reply-button")) {
+            var postId = event.target.getAttribute("data-post-id");
+            var replyForm = document.querySelector(`.reply-form[data-post-id="${postId}"]`);
+            replyForm.style.display = "block"; // Show the reply form
+        }
+    });
+    
+    // Function to handle reply form submission
+    document.body.addEventListener("submit", function(event) {
+        event.preventDefault();
+        
+        if (event.target.classList.contains("reply-form")) {
+            var postId = event.target.getAttribute("data-post-id");
+            var content = event.target.querySelector("textarea").value;
+            
+            // Create reply HTML
+            var replyHTML = `
+                <div class="reply">
+                    <div class="reply-content">${content}</div>
+                    <div class="post-meta">
+                        Posted by You on ${new Date().toLocaleDateString()}
+                    </div>
+                </div>
+            `;
+            
+            // Insert reply HTML into replies section
+            var repliesContainer = document.querySelector(`.forum-post[data-post-id="${postId}"] .replies`);
+            repliesContainer.insertAdjacentHTML("beforeend", replyHTML);
+            
+            // Clear form field
+            event.target.querySelector("textarea").value = "";
+            
+            // Hide reply form
+            event.target.style.display = "none";
+            
+            // Hide the submit button
+            event.target.querySelector("button[type=submit]").style.display = "none";
+        }
+    });
+</script>
+
+</body>
+</html>
