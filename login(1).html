@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <!-- Include Font Awesome CSS -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+    <style>
+        body {
+          background-repeat: no-repeat;
+          background-attachment: fixed;
+          background-size: cover;
+        }
+
+        .content {
+          max-width: 500px;
+          margin: auto;
+        }
+    .wrapper {
+        width: 800px;
+        height: 600px;
+        position: relative;
+        margin: 3% auto;
+        box-shadow: 2px 18px 70px 0px #9D9D9D;
+        overflow: hidden;
+        margin-top: 200px;
+    }
+    
+    .login-text {
+        width: 800px;
+        height:450px;
+        background: linear-gradient(to left, #24b991, #005c4e);
+        position: absolute;
+        top: -300px;
+        box-sizing: border-box;
+        padding: 6%;
+        transition: all 0.5s ease-in-out;
+        z-index: 11;
+    }
+    
+    .text {
+        margin-left: 20px;
+        color: #fff;
+        display: none;
+        transition: all 0.5s ease-in-out;
+        transition-delay: 0.3s;
+    
+        a, a:visited {
+            font-size: 36px;
+            color: #fff;
+            text-decoration: none;  
+            font-weight: bold;
+            display: block;
+        }
+    
+        hr {
+            width: 10%;
+            float: left;
+            background-color: #fff;
+            font-size: 16px;
+        }
+    
+        input {
+            margin-top: 30px;
+            height: 40px;
+            width: 300px;
+            border-radius: 2px;
+            border: none;
+            background-color: #444;
+            opacity: 0.6;
+            outline: none;
+            color: #fff;
+            padding-left: 10px;
+        }
+    
+        input[type=text] {
+            margin-top: 60px;
+        }
+    
+        button {
+            margin-top: 60px;
+            height: 40px;
+            width: 140px;
+            outline: none;
+        }
+    
+        .login-btn {
+            background: #fff;
+            border: none;
+            border-radius: 2px;
+            color: #696a86;
+        }
+    
+        .signup-btn {
+            background: transparent;
+            border: 2px solid #fff;;
+            border-radius: 2px;
+            color: #fff;
+            margin-left: 30px;
+        }
+    }
+    
+    .cta {
+        width: 60px;
+        height: 60px;
+        border-radius: 50%;
+        background: #696a86;
+        border: 2px solid #fff;
+        position: absolute;
+        bottom: -30px;
+        left: 370px;
+        color: #fff;
+        outline: none;
+        cursor: pointer;
+        z-index: 11;
+    }
+    
+    .call-text {
+        background-color: #fff;
+        width: 800px;
+        height: 450px;
+        position: absolute;
+        bottom: 0;
+        padding: 10%;
+        box-sizing: border-box;
+        text-align: center;
+    
+        h1 {
+            font-size: 42px;
+            margin-top: 10%;
+            color: #696a86;
+    
+            span {
+                color: #333;
+                font-weight: bolder;
+                
+            }
+        }
+    
+        button {
+            height: 40px;
+            width: 180px;
+            border: none;
+            border-radius: 20px;
+            background: linear-gradient(to left, #24b991, #005c4e);
+            color: #fff;
+            font-weight: bolder;
+            margin-top: 30px;
+            cursor: pointer;
+            outline: none;
+        }
+    }
+    
+    .show-hide {
+        display: block;
+    }
+    
+    .expand {
+        transform: translateY(300px);
+    }
+    header {
+            background-color: #24b991;
+            color: #fff;
+            padding: 20px;
+            text-align: left;
+            display: flex;
+            align-items: center;
+            position: fixed; /* Fixed position */
+            top: 0;
+            width: 100%;
+            z-index: 1000;
+        }
+
+        .logo {
+            width: 50px; /* Width of the logo */
+            height: auto; /* Maintain aspect ratio */
+            vertical-align: middle; /* Align vertically middle */
+        }
+
+        .name {
+            margin-left: 10px; /* Margin to separate logo and name */
+            font-size: 50px; /* Font size of the name */
+            font-family: 'Static Fauna', sans-serif;;
+            margin-top: -0.5px; /* Adjust the margin-top to move the heading up */
+        }
+
+        .circle-crop {
+            width: 80px; /* Adjust the width and height as needed */
+            height: 80px;
+            border-radius: 45%; /* Crop the image into a circle */
+            overflow: hidden; /* Hide overflowing parts of the image */
+        }
+
+        .circle-crop img {
+            width: 100%; /* Ensure the image fills the container */
+            height: 100%;
+            object-fit: cover; /* Maintain aspect ratio and cover the container */
+        }
+    
+    </style>
+</head>
+<body>
+    <header>
+        <img class="circle-crop" src="logo.png" alt="Your Image">
+        <span class="name">Wander Wise</span>
+    </header>
+    <div class="wrapper">
+        <div class="login-text">
+          <button class="cta"><i class="fas fa-chevron-down fa-1x"></i></button>
+          <div class="text">
+            <a href="">Login</a>
+            <hr>
+            <br>
+            <input type="text" id="name" name="name" placeholder="Username">
+            <br>
+            <input type="password" id="password" name="password" placeholder="Password">
+            <br>
+            <button class="login-btn">Log In</button>
+            <button class="signup-btn">Sign Up</button>
+          </div>
+        </div>
+        <div class="call-text">
+          <h1>Show us your <span>creative</span> side</h1>
+          <button>Join the Community</button>
+        </div>
+      
+      </div>
+      <script>
+      var cta = document.querySelector(".cta");
+var check = 0;
+
+cta.addEventListener('click', function(e){
+    var text = e.target.nextElementSibling;
+    var loginText = e.target.parentElement;
+    text.classList.toggle('show-hide');
+    loginText.classList.toggle('expand');
+    if(check == 0)
+    {
+        cta.innerHTML = "<i class=\"fas fa-chevron-up\"></i>";
+        check++;
+    }
+    else
+    {
+        cta.innerHTML = "<i class=\"fas fa-chevron-down\"></i>";
+        check = 0;
+    }
+})
+</script>
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Get the login button
+        var loginButton = document.querySelector('.login-btn');
+
+        // Add click event listener to the login button
+        loginButton.addEventListener('click', function() {
+            // Redirect to the next page upon clicking login
+            window.location.href = "frontend(2).html"; // Change "next_page.html" to the actual URL of your next page
+        });
+    });
+</script>
+
+</body>
+</html>

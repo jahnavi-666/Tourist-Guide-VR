@@ -1,0 +1,250 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Document</title>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css"> <!-- FontAwesome library -->
+        <style>
+            header {
+                background-color: #24b991;
+                color: #fff;
+                padding: 20px;
+                text-align: left;
+                display: flex;
+                align-items: center;
+                position: fixed; /* Fixed position */
+                top: 0;
+                width: 100%;
+                z-index: 1000;
+            }
+    
+            .logo {
+                width: 50px; /* Width of the logo */
+                height: auto; /* Maintain aspect ratio */
+                vertical-align: middle; /* Align vertically middle */
+            }
+    
+            .name {
+                margin-left: 10px; /* Margin to separate logo and name */
+                font-size: 50px; /* Font size of the name */
+                font-family: 'Static Fauna', sans-serif;
+                margin-top: -0.5px; /* Adjust the margin-top to move the heading up */
+            }
+    
+            .circle-crop {
+                width: 80px; /* Adjust the width and height as needed */
+                height: 80px;
+                border-radius: 45%; /* Crop the image into a circle */
+                overflow: hidden; /* Hide overflowing parts of the image */
+            }
+    
+            .circle-crop img {
+                width: 100%; /* Ensure the image fills the container */
+                height: 100%;
+                object-fit: cover; /* Maintain aspect ratio and cover the container */
+            }
+            body {
+                background-color: #f0f0f0;
+                font-family: Arial, sans-serif;
+                margin: 0;
+                padding: 0;
+            }
+    
+            .container {
+                display: flex;
+                flex-direction: column;
+                align-items: flex-start;
+                padding: 20px;
+            }
+    
+            .boxes {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                margin-top: 100px;
+            }
+    
+            .box {
+                width: 200px;
+                height: 100px;
+                margin: 20px;
+                padding: 10px;
+                text-align: center;
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                border-radius: 10px;
+                font-weight: bold;
+                font-size: 18px;
+                color: #fff; /* Text color */
+                transition: background-color 0.3s; /* Smooth transition for color change */
+                cursor: pointer; /* Change cursor to pointer */
+                border: 1px solid black;
+            }
+    
+            /* Change box color on hover */
+            .box:hover {
+                background-color: #95d3c3; /* New color on hover */
+            }
+    
+            /* Search bar */
+            .search-bar {
+                display: flex;
+                align-items: center;
+                background-color: #fff;
+                border-radius: 20px;
+                padding: 10px;
+                width: 300px;
+                border: 1px solid black;
+            }
+    
+            .search-icon {
+                margin-left: auto;
+                color: #888;
+                cursor: pointer;
+            }
+    
+            .search-icon i {
+                font-size: 20px;
+            }
+    
+            .search-input {
+                border: none;
+                outline: none;
+                width: 100%;
+                padding: 5px;
+                font-size: 16px;
+            }
+    
+            .location-icon {
+                margin-right: 10px;
+                color: #ff0000; /* Red color */
+                font-size: 20px;
+            }
+            .menu-icon {
+                position: absolute;
+                right: 4%; /* Move to extreme right */
+                color: #888; /* Menu icon color */
+                font-size: 20px;
+                cursor: pointer;
+                margin-top: -4%;
+            }
+            .tour-container {
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                padding: 20px;
+                background-color: #ffffff;
+                border-radius: 10px;
+                box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            }
+            .tour-image {
+                flex: 1;
+                max-width: 20%;
+                height: auto;
+                border-radius: 5px;
+            }
+            .tour-details {
+                flex: 2;
+                padding: 0 20px;
+            }
+            .tour-title {
+                font-size: 24px;
+                font-weight: bold;
+                margin-bottom: 10px;
+            }
+            .tour-rating {
+                color: #f39c12;
+            }
+            .tour-description {
+                font-size: 14px;
+                margin-bottom: 20px;
+            }
+            .tour-price {
+                font-size: 18px;
+                font-weight: bold;
+            }
+            .book-button {
+                background-color: #e74c3c;
+                color: #ffffff;
+                padding: 10px 20px;
+                border: none;
+                border-radius: 5px;
+                cursor: pointer;
+                margin-left: 85%;
+            }
+        </style>
+    </head>
+<body>
+    <header>
+        <img class="circle-crop" src="logo.png" alt="Your Image">
+        <span class="name">Wander Wise</span>
+    </header>
+    <div class="container">
+        <div class="boxes">
+            <div class="box" style="color: black;">Summer</div>
+            <div class="box" style="color: black;">Winter</div>
+            <div class="box" style="color: black;">Monsoon</div>
+            <div class="box" style="color: black;">Spring</div>
+            <div class="box" style="color: black;">Autumn</div>
+        </div>
+        <div class="search-bar">
+            <div class="location-icon"><i class="fas fa-map-marker-alt"></i></div>
+            <input type="text" class="search-input" placeholder="Destination">
+            <div class="search-icon"><i class="fas fa-search"></i></div>
+        </div>
+    </div>
+    <div class="menu-icon"><i class="fas fa-bars"></i> Sort by: <span style="color: rgb(33, 90, 223);">Season</span> | <span style="color: rgb(136, 136, 205);">Popularity | Price | Name</span>
+    </div> 
+    <input type="text" id="searchInput" placeholder="Search..." oninput="searchData(event)">
+<div id="data-display"></div>
+
+<script>
+    let csvDataArray = [];
+
+    // Function to fetch the CSV data from the server
+    function fetchCSV() {
+        fetch('city_final(1).csv') // Replace with the path to your CSV file
+            .then(response => response.text())
+            .then(content => {
+                parseCSV(content);
+                displayData(csvDataArray);
+            }).catch(error => console.log(error));
+    }
+
+    function parseCSV(csvData) {
+        const rows = csvData.split('\n');
+        rows.forEach(row => {
+            csvDataArray.push(row.split(','));
+        });
+    }
+
+    function displayData(dataArray) {
+        const displayDiv = document.getElementById('data-display');
+        displayDiv.innerHTML = ''; // Clear previous data
+        dataArray.forEach(row => {
+            const paragraph = document.createElement('p');
+            paragraph.textContent = row.join(', ');
+            displayDiv.appendChild(paragraph);
+        });
+    }
+
+    function searchData(event) {
+        const searchTerm = event.target.value.toLowerCase();
+        if (searchTerm) {
+            const filteredData = csvDataArray.filter(row => 
+                row.some(column => column.toLowerCase().includes(searchTerm))
+            );
+            displayData(filteredData);
+        } else {
+            displayData(csvDataArray); // No search term, display all data
+        }
+    }
+
+    // Call the fetchCSV function when the page loads
+    window.onload = fetchCSV;
+</script>
+
+</body>
+</html>
